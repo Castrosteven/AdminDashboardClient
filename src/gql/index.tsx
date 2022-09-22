@@ -53,6 +53,7 @@ export const MY_COMPANY = gql`
         id
         firstName
         lastName
+        email
       }
       projects {
         id
@@ -62,6 +63,39 @@ export const MY_COMPANY = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const CREATE_EMPLOYEE = gql`
+  mutation createEmployee($data: createEmployeeInput!) {
+    createEmployee(data: $data) {
+      email
+      firstName
+      id
+      lastName
+    }
+  }
+`;
+
+export const EMPLOYEE_MUTATION = gql`
+  subscription employees {
+    employees {
+      email
+      firstName
+      lastName
+      id
+    }
+  }
+`;
+
+export const GET_EMPLOYEES = gql`
+  query employees {
+    employees {
+      email
+      firstName
+      id
+      lastName
     }
   }
 `;

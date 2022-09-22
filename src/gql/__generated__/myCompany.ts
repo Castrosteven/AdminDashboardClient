@@ -12,6 +12,7 @@ export interface myCompany_myCompany_employees {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
 }
 
 export interface myCompany_myCompany_projects {

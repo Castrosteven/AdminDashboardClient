@@ -12,6 +12,12 @@ export interface changePasswordInput {
   newPassword: string;
 }
 
+export interface createEmployeeInput {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface createUserInputType {
   firstName: string;
   lastName: string;
