@@ -9,10 +9,7 @@ import { useMemo } from "react";
 import { useTable, Column } from "react-table";
 import { WithData } from "../../contexts/DataContext";
 
-interface Props {
-  employees: (employees_employees | null)[];
-}
-export const EmployeeTable = () => {
+export const ProjectsTable = () => {
   const { employees, loading } = WithData();
   const [deleteEmployee] = useMutation<deleteEmployee>(DELETE_EMPLOYEE);
   //Delete Handler

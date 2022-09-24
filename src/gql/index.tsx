@@ -121,3 +121,15 @@ export const DELETE_EMPLOYEE = gql`
     }
   }
 `;
+
+export const GET_PROJECTS = gql`
+  query getProjects {
+    projects {
+      id
+      name
+      tasks {
+        description
+      }
+    }
+  }
+`;

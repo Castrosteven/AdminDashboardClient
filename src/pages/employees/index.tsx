@@ -9,24 +9,8 @@ import { NewEmployeeForm } from "../../components/NewEmployeeForm";
 import { EMPLOYEE_MUTATION, GET_EMPLOYEES } from "../../gql";
 import { employees } from "../../gql/__generated__/employees";
 const Employees: NextPage = () => {
-  const { subscribeToMore, loading, data, error } =
-    useQuery<employees>(GET_EMPLOYEES);
   const [modal, setModal] = useState(false);
-  useEffect(() => {
-    subscribeToMore({
-      document: EMPLOYEE_MUTATION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        return subscriptionData.data;
-      },
-    });
-  }, []);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>error ${error.message}</div>;
-  }
+
   return (
     <div className="container mx-auto  flex justify-center items-center w-full p-4 h-full">
       <div className="rounded-md bg-white h-full text-gray-800 p-4 w-full">
@@ -47,7 +31,7 @@ const Employees: NextPage = () => {
                 </Button>
               </div>
             </div>
-            {data && <EmployeeTable employees={data.employees} />}
+            {<EmployeeTable />}
           </div>
         )}
       </div>

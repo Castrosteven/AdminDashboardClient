@@ -1,12 +1,14 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Cookies from "universal-cookie";
 import { DashboardCard } from "../components/DashboardCard";
+import { WithData } from "../contexts/DataContext";
 import { MY_COMPANY } from "../gql";
 import { myCompany, myCompany_myCompany } from "../gql/__generated__/myCompany";
 import { AuthClient } from "../utils/AuthClient";
 
 const Home: NextPage<{ company: myCompany_myCompany }> = ({ company }) => {
-  const numOfEmployees = company.employees.length;
+  const { employees } = WithData();
+  const numOfEmployees = employees && employees.length;
   const numOfTeams = company.teams.length;
   const numOfProjects = company.projects.length;
   return (

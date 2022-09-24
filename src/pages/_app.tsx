@@ -13,6 +13,7 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { split } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { DataWrapper } from "../contexts/DataContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const cookies = new Cookies();
@@ -61,7 +62,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <UserWrapper>
         <Layout>
-          <Component {...pageProps} />
+          <DataWrapper>
+            <Component {...pageProps} />
+          </DataWrapper>
         </Layout>
       </UserWrapper>
     </ApolloProvider>
