@@ -1,48 +1,142 @@
+import { useRouter } from "next/router";
 import { employees_employees } from "../../gql/__generated__/employees";
-import { myCompany_myCompany } from "../../gql/__generated__/myCompany";
+import { AiFillEdit } from "react-icons/ai";
+import { BsFillTrashFill } from "react-icons/bs";
+import { useMutation } from "@apollo/client";
+import { DELETE_EMPLOYEE } from "../../gql";
+import { deleteEmployee } from "../../gql/__generated__/deleteEmployee";
+import { useMemo } from "react";
+import { useTable, Column } from "react-table";
 
 interface Props {
   employees: (employees_employees | null)[];
 }
 export const EmployeeTable = ({ employees }: Props) => {
+  const [deleteEmployee] = useMutation<deleteEmployee>(DELETE_EMPLOYEE);
+  //Delete Handler
+  const deleteHandler = async (employeeId: String) => {
+    if (window.confirm("Are you sure you want to delete user ?")) {
+      await deleteEmployee({
+        variables: {
+          data: {
+            id: employeeId,
+          },
+        },
+      });
+      alert("User Deleted");
+    }
+  };
+  const router = useRouter();
+  // Collums
+  const columns = useMemo(
+    () => [
+      {
+        Header: "First Name",
+        accessor: "firstName",
+      },
+      {
+        Header: "Last Name",
+        accessor: "lastName",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Action",
+        accessor: "actions",
+        Cell: ({ data }: { data: employees_employees }) => {
+          return <CustomRow props={data} />;
+        },
+      },
+    ],
+    [employees]
+  ) as Column<employees_employees>[] | any;
+  // Data
+  const data = useMemo(() => {
+    return employees as employees_employees[];
+  }, [employees, deleteHandler]);
+  // Table Props
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data,
+    });
+  // Custom Actions Component
+  const CustomRow = ({ props }: { props: employees_employees }) => {
+    const { id } = props;
+    return (
+      <div className="flex items-center gap-5">
+        <button onClick={() => {}}>
+          <AiFillEdit size={15} />
+        </button>{" "}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteHandler(id);
+          }}
+        >
+          <BsFillTrashFill size={15} />
+        </button>
+      </div>
+    );
+  };
   return (
-    <div className="overflow-x-auto relative">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="py-3 px-6">
-              First Name
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Last Name
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Email
-            </th>
-          </tr>
+    <div className="bg-white shadow-md rounded my-6">
+      {/* Table Starts */}
+      <table
+        className="min-w-max w-full table-auto"
+        {...getTableProps()}
+        border={1}
+      >
+        {/* Head */}
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr
+              className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+              {...headerGroup.getHeaderGroupProps()}
+            >
+              {headerGroup.headers.map((column) => (
+                <th
+                  className="py-3 px-6 text-left"
+                  {...column.getHeaderProps()}
+                >
+                  {column.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        <tbody>
-          {employees &&
-            employees.map((employee, index) => {
-              if (employee) {
-                return (
-                  <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                    key={index}
-                  >
-                    <th
-                      scope="row"
-                      className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        {/* Body */}
+        <tbody
+          className="text-gray-600 text-sm font-light"
+          {...getTableBodyProps()}
+        >
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr
+                onClick={() => {
+                  router.push(`employee/${row.original.id}`);
+                }}
+                className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+                {...row.getRowProps()}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      className="py-3 px-6 text-left whitespace-nowrap"
+                      {...cell.getCellProps()}
                     >
-                      {employee.firstName}
-                    </th>
-                    <td>{employee.lastName}</td>
-                    <td>{employee.email}</td>
-                  </tr>
-                );
-              }
-              return null;
-            })}
+                      {cell.render("Cell", {
+                        data: row.original,
+                      })}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

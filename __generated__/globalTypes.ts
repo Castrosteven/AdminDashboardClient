@@ -25,6 +25,10 @@ export interface createUserInputType {
   password: string;
 }
 
+export interface getEmployeeInputType {
+  id: string;
+}
+
 export interface loginUserInputType {
   email: string;
   password: string;

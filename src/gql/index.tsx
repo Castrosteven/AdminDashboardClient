@@ -90,8 +90,30 @@ export const EMPLOYEE_MUTATION = gql`
 `;
 
 export const GET_EMPLOYEES = gql`
-  query employees {
+  query GetEmployees {
     employees {
+      email
+      firstName
+      id
+      lastName
+    }
+  }
+`;
+
+export const EMPLOYEE = gql`
+  query employee($data: getEmployeeInputType!) {
+    employee(data: $data) {
+      email
+      firstName
+      id
+      lastName
+    }
+  }
+`;
+
+export const DELETE_EMPLOYEE = gql`
+  mutation deleteEmployee($data: getEmployeeInputType!) {
+    deleteEmployee(data: $data) {
       email
       firstName
       id
