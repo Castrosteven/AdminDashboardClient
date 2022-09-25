@@ -99,21 +99,31 @@ export const EmployeeTable = () => {
       >
         {/* Head */}
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr
-              className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-              {...headerGroup.getHeaderGroupProps()}
-            >
-              {headerGroup.headers.map((column) => (
-                <th
-                  className="py-3 px-6 text-left"
-                  {...column.getHeaderProps()}
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
+          {headerGroups.map((headerGroup, i) => {
+            const { key, ...restHeaderGroupProps } = {
+              ...headerGroup.getHeaderGroupProps(),
+            };
+            return (
+              <tr
+                key={key}
+                className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+                {...restHeaderGroupProps}
+              >
+                {headerGroup.headers.map((column, i) => {
+                  const { key, ...restColumn } = { ...column.getHeaderProps() };
+                  return (
+                    <th
+                      key={key}
+                      className="py-3 px-6 text-left"
+                      {...restColumn}
+                    >
+                      {column.render("Header")}
+                    </th>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </thead>
         {/* Body */}
         <tbody
@@ -122,19 +132,23 @@ export const EmployeeTable = () => {
         >
           {rows.map((row, i) => {
             prepareRow(row);
+            const { key, ...restRowProps } = row.getRowProps();
             return (
               <tr
+                key={key}
                 onClick={() => {
                   router.push(`employee/${row.original.id}`);
                 }}
                 className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
-                {...row.getRowProps()}
+                {...restRowProps}
               >
                 {row.cells.map((cell) => {
+                  const { key, ...restCellProps } = cell.getCellProps();
                   return (
                     <td
+                      key={key}
                       className="py-3 px-6 text-left whitespace-nowrap"
-                      {...cell.getCellProps()}
+                      {...restCellProps}
                     >
                       {cell.render("Cell", {
                         data: row.original,
