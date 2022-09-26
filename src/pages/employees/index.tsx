@@ -12,16 +12,19 @@ const Employees: NextPage = () => {
   const [modal, setModal] = useState(false);
 
   return (
-    <div className="container mx-auto  flex justify-center items-center w-full p-4 h-full">
+    <div className="container mx-auto flex-col  flex justify-center items-center w-full p-6 h-full">
       <div className="rounded-md bg-white h-full text-gray-800 p-4 w-full">
+        <div className="w-full border-b-2 h-10 text-2xl font-semibold">
+          Employees Page
+        </div>
         {modal ? (
           <ModalWrapper setModal={setModal}>
             <NewEmployeeForm setModal={setModal} />
           </ModalWrapper>
         ) : (
-          <div className="h-full">
+          <div className="h-full flex flex-col">
             <div className="h-20 flex justify-end">
-              <div>
+              <div className="pt-10">
                 <Button
                   onClick={() => {
                     setModal(!modal);

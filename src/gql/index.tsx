@@ -129,6 +129,36 @@ export const GET_PROJECTS = gql`
       name
       tasks {
         description
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const PROJECT_MUTATION = gql`
+  subscription projects {
+    projects {
+      id
+      name
+      tasks {
+        description
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const CREATE_PROJECT = gql`
+  mutation createProject($data: createProjectInput!) {
+    createProject(data: $data) {
+      id
+      name
+      tasks {
+        description
+        id
+        name
       }
     }
   }

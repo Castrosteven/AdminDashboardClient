@@ -7,10 +7,10 @@ import { myCompany, myCompany_myCompany } from "../gql/__generated__/myCompany";
 import { AuthClient } from "../utils/AuthClient";
 
 const Home: NextPage<{ company: myCompany_myCompany }> = ({ company }) => {
-  const { employees } = WithData();
+  const { employees, projects } = WithData();
   const numOfEmployees = employees && employees.length;
   const numOfTeams = company.teams.length;
-  const numOfProjects = company.projects.length;
+  const numOfProjects = projects && projects.length;
   return (
     <div className="container mx-auto h-full flex p-4">
       <div className="grid gap-5 grid-cols-3 w-full">

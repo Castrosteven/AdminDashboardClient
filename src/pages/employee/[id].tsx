@@ -12,7 +12,20 @@ import { AuthClient } from "../../utils/AuthClient";
 
 const Employee: NextPage<{ employee: employee_employee }> = ({ employee }) => {
   const { email, firstName, lastName } = employee;
-  return <div>{firstName}</div>;
+  return (
+    <div className="container mx-auto h-full flex flex-col p-6">
+      <div className="rounded-md bg-white h-full text-gray-800 p-4">
+        <div className="w-full border-b-2 h-10 text-2xl font-semibold">
+          {firstName} {lastName}
+        </div>
+        <div>
+          <p>Email {email}</p>
+          <p>Project</p>
+          <p>Tasks Assigned</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 interface QueryType {
   id: string;
