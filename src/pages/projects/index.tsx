@@ -38,8 +38,8 @@ const Projects: NextPage = () => {
             </div>
             <div className="grid grid-cols-4 gap-5 p-5">
               {projects &&
-                projects.map((project) => {
-                  return <ProjectCard project={project} />;
+                projects.map((project, i) => {
+                  return <ProjectCard key={i} project={project} />;
                 })}
             </div>
           </div>
