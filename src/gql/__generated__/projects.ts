@@ -4,23 +4,23 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: getProjects
+// GraphQL subscription operation: projects
 // ====================================================
 
-export interface getProjects_projects_tasks {
+export interface projects_projects_tasks {
   __typename: "Task";
   description: string;
   id: string;
   name: string;
 }
 
-export interface getProjects_projects {
+export interface projects_projects {
   __typename: "Project";
   id: string;
   name: string;
-  tasks: (getProjects_projects_tasks | null)[];
+  tasks: (projects_projects_tasks | null)[];
 }
 
-export interface getProjects {
-  projects: (getProjects_projects | null)[];
+export interface projects {
+  projects: (projects_projects | null)[];
 }

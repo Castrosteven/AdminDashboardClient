@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { EMPLOYEE_MUTATION, GET_EMPLOYEES, GET_PROJECTS } from "../gql";
+import { GET_PROJECTS, PROJECT_MUTATION } from "../gql";
 
 import { getProjects } from "../gql/__generated__/getProjects";
 
@@ -9,7 +9,7 @@ export const ProjectHook = () => {
     useQuery<getProjects>(GET_PROJECTS);
   useEffect(() => {
     subscribeToMore({
-      document: EMPLOYEE_MUTATION,
+      document: PROJECT_MUTATION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         return subscriptionData.data;
@@ -17,7 +17,7 @@ export const ProjectHook = () => {
     });
   }, []);
   return {
-    employees: data && data.projects,
+    projects: data && data.projects,
     loading,
   };
 };

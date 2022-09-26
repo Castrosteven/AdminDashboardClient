@@ -8,12 +8,13 @@ import { deleteEmployee } from "../../gql/__generated__/deleteEmployee";
 import { useMemo } from "react";
 import { useTable, Column } from "react-table";
 import { WithData } from "../../contexts/DataContext";
+import { EmployeeHook } from "../../hooks/EmployeeHook";
 
 interface Props {
   employees: (employees_employees | null)[];
 }
 export const EmployeeTable = () => {
-  const { employees, loading } = WithData();
+  const { employees, loading } = EmployeeHook();
   const [deleteEmployee] = useMutation<deleteEmployee>(DELETE_EMPLOYEE);
   //Delete Handler
   const deleteHandler = async (employeeId: String) => {

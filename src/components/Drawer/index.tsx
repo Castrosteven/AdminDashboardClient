@@ -31,11 +31,11 @@ export const Drawer = () => {
       label: "Projects",
       Icon: VscProject,
     },
-    {
-      path: "/teams",
-      label: "Teams",
-      Icon: RiTeamLine,
-    },
+    // {
+    //   path: "/teams",
+    //   label: "Teams",
+    //   Icon: RiTeamLine,
+    // },
   ];
   type Tab = {
     path: string;

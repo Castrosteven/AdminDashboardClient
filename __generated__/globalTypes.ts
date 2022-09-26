@@ -18,6 +18,10 @@ export interface createEmployeeInput {
   lastName: string;
 }
 
+export interface createProjectInput {
+  name: string;
+}
+
 export interface createUserInputType {
   firstName: string;
   lastName: string;
